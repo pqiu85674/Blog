@@ -20,29 +20,33 @@
     var CONFIG = {"hostname":"pqiu85674.github.io","root":"/Blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="pqiu85674">
-<meta property="og:url" content="https://pqiu85674.github.io/Blog/index.html">
+  <meta name="description" content="Node.jsNode.js 是一個開源、跨平台的 JavaScript 執行時環境，它允許開發者在伺服器端運行 JavaScript。Node.js 採用了 Google 的 V8 JavaScript 引擎（與 Chrome 瀏覽器使用的相同），提供了高效、輕量的事件驅動架構，使其特別適用於構建高性能和可擴展的網絡應用。 安裝 前往官方網站下載 Node.js 安裝檔官方連結：node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="認識 Node.js、NPM">
+<meta property="og:url" content="https://pqiu85674.github.io/Blog/2024/06/04/Node/index.html">
 <meta property="og:site_name" content="pqiu85674">
+<meta property="og:description" content="Node.jsNode.js 是一個開源、跨平台的 JavaScript 執行時環境，它允許開發者在伺服器端運行 JavaScript。Node.js 採用了 Google 的 V8 JavaScript 引擎（與 Chrome 瀏覽器使用的相同），提供了高效、輕量的事件驅動架構，使其特別適用於構建高性能和可擴展的網絡應用。 安裝 前往官方網站下載 Node.js 安裝檔官方連結：node.js">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-06-04T01:50:22.000Z">
+<meta property="article:modified_time" content="2024-06-04T08:41:32.173Z">
 <meta property="article:author" content="Peter">
-<meta property="article:tag" content="pqiu85674">
+<meta property="article:tag" content="node.js">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://pqiu85674.github.io/Blog/">
+<link rel="canonical" href="https://pqiu85674.github.io/Blog/2024/06/04/Node/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-TW'
   };
 </script>
 
-  <title>pqiu85674</title>
+  <title>認識 Node.js、NPM | pqiu85674</title>
   
 
 
@@ -181,76 +185,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/04/NodeServer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/Blog/images/avatar.gif">
-      <meta itemprop="name" content="Peter">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pqiu85674">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Blog/2024/06/04/NodeServer/" class="post-title-link" itemprop="url">NodeServer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-              
-
-              <time title="創建時間：2024-06-04 17:08:14 / 修改時間：18:04:21" itemprop="dateCreated datePublished" datetime="2024-06-04T17:08:14+08:00">2024-06-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="以Node-js-實作一個-Server"><a href="#以Node-js-實作一個-Server" class="headerlink" title="以Node.js 實作一個 Server"></a>以Node.js 實作一個 Server</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node.js 內建 http 相關 module</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">      <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 兩個參數分別是 request 和 response，這裡使用命名慣例寫法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>,headers);</span><br><span class="line">    res.<span class="title function_">write</span>(<span class="string">&quot;This is index!&quot;</span>); <span class="comment">// 指定 respone 回傳內容</span></span><br><span class="line">    res.<span class="title function_">end</span>(); <span class="comment">// 結束這個 response</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">url</span> === <span class="string">&quot;/seach&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>,headers);</span><br><span class="line">    res.<span class="title function_">write</span>(<span class="string">&quot;This is seach Page!&quot;</span>); <span class="comment">// 指定 respone 回傳內容</span></span><br><span class="line">    res.<span class="title function_">end</span>(); <span class="comment">// 結束這個 response</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
@@ -266,10 +204,9 @@
       <meta itemprop="name" content="pqiu85674">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Blog/2024/06/04/Node/" class="post-title-link" itemprop="url">認識 Node.js、NPM</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          認識 Node.js、NPM
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -302,7 +239,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h1><p>Node.js 是一個開源、跨平台的 JavaScript 執行時環境，它允許開發者在伺服器端運行 JavaScript。Node.js 採用了 Google 的 V8 JavaScript 引擎（與 Chrome 瀏覽器使用的相同），提供了高效、輕量的事件驅動架構，使其特別適用於構建高性能和可擴展的網絡應用。</p>
+        <h1 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h1><p>Node.js 是一個開源、跨平台的 JavaScript 執行時環境，它允許開發者在伺服器端運行 JavaScript。Node.js 採用了 Google 的 V8 JavaScript 引擎（與 Chrome 瀏覽器使用的相同），提供了高效、輕量的事件驅動架構，使其特別適用於構建高性能和可擴展的網絡應用。</p>
 <h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><ul>
 <li><p>前往官方網站下載 Node.js 安裝檔<br>官方連結：<a target="_blank" rel="noopener" href="https://nodejs.org/en">node.js</a></p>
 </li>
@@ -385,257 +322,36 @@
 </li>
 </ol>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/Blog/tags/node-js/" rel="tag"><i class="fa fa-tag"></i> node.js</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/05/08/Hexo/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/Blog/images/avatar.gif">
-      <meta itemprop="name" content="Peter">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pqiu85674">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Blog/2024/05/08/Hexo/" class="post-title-link" itemprop="url">Hexo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2024-05-08 14:01:50" itemprop="dateCreated datePublished" datetime="2024-05-08T14:01:50+08:00">2024-05-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2024-06-04 16:48:03" itemprop="dateModified" datetime="2024-06-04T16:48:03+08:00">2024-06-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Hexo%E4%B8%80%E9%8D%B5%E4%BD%88%E7%BD%B2%E5%88%B0Github/" itemprop="url" rel="index"><span itemprop="name">Hexo一鍵佈署到Github</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="安裝需求"><a href="#安裝需求" class="headerlink" title="安裝需求"></a>安裝需求</h1><p>在開始安裝 Hexo 之前，必須先在電腦安裝下列工具：</p>
-<ul>
-<li><p>Node.js</p>
-</li>
-<li><p>Git</p>
-</li>
-</ul>
-<p>確認安裝版本</p>
-<ul>
-<li><p>node.js</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>npm</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="Hexo-環境建置"><a href="#Hexo-環境建置" class="headerlink" title="Hexo 環境建置"></a>Hexo 環境建置</h1><ul>
-<li><p>安裝 Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>確認安裝成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化 Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;資料夾名稱&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="目錄結構"><a href="#目錄結構" class="headerlink" title="目錄結構"></a>目錄結構</h1><ul>
-<li>node_modules</li>
-<li>scaffolds</li>
-<li>source<ul>
-<li>_posts</li>
-</ul>
-</li>
-<li>themes</li>
-<li>_config.yml</li>
-<li>.gitignore</li>
-<li>package.json</li>
-<li>package-lock.json</li>
-</ul>
-<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><p><strong>加入 landscape 主題</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/hexojs/hexo-theme-landscape themes/landscape</span><br></pre></td></tr></table></figure>
-
-<p>可參考<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-theme-landscape">https://github.com/hexojs/hexo-theme-landscape</a></p>
-<p><strong>加入 next 主題</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-
-<p>可參考<a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
-<p>其他主題可參考<a target="_blank" rel="noopener" href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
-<h2 id="config-yml-內容介紹"><a href="#config-yml-內容介紹" class="headerlink" title="_config.yml 內容介紹"></a>_config.yml 內容介紹</h2><ul>
-<li>title: Hexo # 部落格名稱</li>
-<li>subtitle: ‘’ # 部落格小標題</li>
-<li>description: ‘’ # 部落格描述</li>
-<li>keywords: # 部落格關鍵字</li>
-<li>author: John Doe # 部落格作者</li>
-<li>language: en # 部落格語系(可以調成 zh-TW)</li>
-<li>timezone: ‘’ # 標準時間</li>
-</ul>
-<h1 id="Hexo-指令"><a href="#Hexo-指令" class="headerlink" title="Hexo 指令"></a>Hexo 指令</h1><p>常用的 Hexo 指令</p>
-<ul>
-<li><p>新增文章</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&#x27;文章名稱&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>產生靜態檔案</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟模擬伺服器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>清除暫存檔案</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>產生靜態檔案並且部署到 GitHub 上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="一鍵佈署到-Github-上"><a href="#一鍵佈署到-Github-上" class="headerlink" title="一鍵佈署到 Github 上"></a>一鍵佈署到 Github 上</h2><p><strong>在 Github 上建立一個專案並且記錄網址</strong></p>
-<ul>
-<li><p>安裝 hexo-deployer-git.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更改 _config.yml 的現有資料，並新增以下組態:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">url:<span class="string">&#x27;https://username.github.io/project&#x27;</span>(網址要改)</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/&lt;username&gt;/&lt;project&gt;(網址要改)</span><br><span class="line">  <span class="comment"># example, https://github.com/hexojs/hexojs.github.io</span></span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>執行以下指令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>參考連結:<a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/docs/github-pages">https://hexo.io/zh-tw/docs/github-pages</a></p>
-</li>
-</ul>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Blog/2024/05/08/Hexo/" rel="prev" title="Hexo">
+      <i class="fa fa-chevron-left"></i> Hexo
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Blog/2024/06/04/NodeServer/" rel="next" title="NodeServer">
+      NodeServer <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/1970/01/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/Blog/images/avatar.gif">
-      <meta itemprop="name" content="Peter">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pqiu85674">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Blog/1970/01/01/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：1970-01-01 08:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T08:00:00+08:00">1970-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2024-05-08 11:08:15" itemprop="dateModified" datetime="2024-05-08T11:08:15+08:00">2024-05-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -688,6 +404,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js"><span class="nav-number">1.</span> <span class="nav-text">Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D"><span class="nav-number">1.1.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B0%A1%E6%98%93%E6%8C%87%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">簡易指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%B7%E8%A1%8C-JS-%E6%AA%94%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">執行 JS 檔案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NPM"><span class="nav-number">2.</span> <span class="nav-text">NPM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-init"><span class="nav-number">2.1.</span> <span class="nav-text">npm init</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC%E5%A5%97%E4%BB%B6%E6%8C%87%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">關於套件指令</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
