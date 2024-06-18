@@ -187,6 +187,400 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/17/GitBranch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/06/17/GitBranch/" class="post-title-link" itemprop="url">Git Branch</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-06-17 17:36:04" itemprop="dateCreated datePublished" datetime="2024-06-17T17:36:04+08:00">2024-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-18 15:49:30" itemprop="dateModified" datetime="2024-06-18T15:49:30+08:00">2024-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Git-Branch"><a href="#Git-Branch" class="headerlink" title="Git Branch"></a>Git Branch</h1><p>假設 A 電腦跟 B 電腦都共用一個 Repositories<br>在 A 及 B 電腦上先<code>clone</code><br>以下方便區分 A 及 B 電腦<br>所以將 A 電腦路徑設為<code>./gitA/</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./gitA/</span><br><span class="line">git <span class="built_in">clone</span> Repositories url</span><br></pre></td></tr></table></figure>
+
+<p>B 電腦路徑設為<code>./gitB/</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ./gitB/</span><br><span class="line">git <span class="built_in">clone</span> Repositories url</span><br></pre></td></tr></table></figure>
+
+<p>先把 A 電腦 clone 下來的檔案內容進行更改<br>更改完後執行 <code>git add .</code> <code>git commit -m &#39;A Message&#39;</code> <code>git push</code><br>push 完之後看一下 log <code>git log --oneline</code> 可以看到 commit 的紀錄<br>這邊是故意先 push 讓其他使用者的 <code>git log</code>不同</p>
+<h1 id="建立-Branch"><a href="#建立-Branch" class="headerlink" title="建立 Branch"></a>建立 Branch</h1><p>返回 B 電腦並執行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch new-branch-name //建立branch</span><br><span class="line">git branch //查看所有branch</span><br><span class="line">git switch new-branch-name //前往建立好的branch</span><br><span class="line">git branch //查看目前所在的branch上</span><br></pre></td></tr></table></figure>
+
+<p>也可以執行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b new-branch-name //建立branch並到此branch</span><br><span class="line">git branch//查看目前所在的branch上</span><br></pre></td></tr></table></figure>
+
+<p>刪除 branch</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch --delete new-branch-name //刪除branch</span><br><span class="line">git branch //查看所有branch</span><br></pre></td></tr></table></figure>
+
+<p>push 到遠端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add.</span><br><span class="line">git commit -m <span class="string">&#x27;B Message&#x27;</span></span><br><span class="line">git push //出錯</span><br><span class="line">git push -u origin HEAD  //git push -u origin new-branch-name //成功push</span><br></pre></td></tr></table></figure>
+
+<p>剛建立好 branch 直接 push 會失敗，因為電腦不知道你要 push 哪個 branch，所以要設定<code>git push -u origin HEAD</code>同等於<code>git push -u origin new-branch-name</code>告訴電腦要 push 的 branch，HEAD 會抓到電腦的 branch 最後一次 commit，也可以直接打 branch 的名稱</p>
+<p>到 Github 看你的 branch 就會看到兩個 branch<br>可以切換到 new-branch-name 點開 commit 可以看到 B 電腦所 push 的內容，也可以查看剛剛 B 電腦修改的檔案<br>看好之後切回 new-branch-name 可以看到上面綠色的<code>Compare &amp; pull request</code>點擊下去<br>點擊 Create pull request<br>可以看到上面有<code>base</code>可以選擇<code>main</code>(原本的 branch) <code>compate</code> 選擇 <code>new-branch-name</code>(新的 branch)<br>會出現以下錯誤</p>
+<p><code>Can’t automatically merge. Don’t worry, you can still create the pull request.</code></p>
+<p>這邊沒辦法直接把新的 branch 合併到原本的 branch</p>
+<p>這邊回到 B 電腦</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//這邊要注意做 switch branch 以前B電腦要先commit過否則資料會消失</span><br><span class="line">git switch main //切換到原本的branch</span><br><span class="line">git branch //查看目前有無在main branch上</span><br><span class="line">git pull //把main的commit內容pull到B電腦上</span><br><span class="line">git <span class="built_in">log</span> --oneline //B電腦查看<span class="built_in">log</span> 可以看到只有main的commit內容(A電腦修改的部份)</span><br><span class="line">git switch new-branch-name //切回新的branch</span><br><span class="line">git rebase main //把目前的分支的起始點移到最新進度</span><br></pre></td></tr></table></figure>
+
+<p>會顯示檔案衝突要手動解決檔案的內容，這邊是使用 VS Code 直接開啟檔案就可以對檔案進行更改<br>修改完檔案後</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git status //查看一下狀態裡面會有指令可以參考</span><br><span class="line">git rebase --<span class="built_in">continue</span> //解決衝突後要下此指令</span><br><span class="line">git push //失敗</span><br><span class="line">git push -f //成功</span><br></pre></td></tr></table></figure>
+
+<p>這裡<code>git push</code>失敗的原因是因為剛剛我們在 B 電腦上把 A 電腦的修改給 pull 到 B 電腦上進行合併，所以目前的 B 電腦 <code>git log</code> 是 <code>main</code> 的 commit 合併 <code>new-branch-name</code> 跟 Github 裡面 <code>new-branch-name</code> 的 commit 不一樣，所以不能<code>git push</code></p>
+<p>這裡要用 <code>git push -f</code> 強制 push，就可以把我們合併的 commit 給 push 到 Github 的 <code>new-branch-name</code></p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>這裡使用 <code>git push -f</code> 是將合併好的 <code>commit</code> 給 <code>push</code> 到 B 電腦所創造出來的 <code>new-branch-name</code>分支上<br>但是<code>git push -f</code> <strong>千萬不要在主要分支做使用</strong>，只能在自己建立的 branch 分支上做使用，因為此指令會更改歷史紀錄，一旦在主要分支上使用會更改到別人的紀錄，會非常混亂</p>
+<p>再次回到 Github 並切換到 <code>new-branch-name</code> 點開 commit 可以看到已經成功更新了<br>看好之後切回 <code>new-branch-name</code> 可以看到上面綠色的<code>Compare &amp; pull request</code>點擊下去<br>點擊 <code>Create pull request</code><br>可以看到上面有<code>base</code>可以選擇<code>main</code>(原本的 branch) <code>compate</code> 選擇 <code>new-branch-name</code>(新的 branch)<br>看到以下訊息<br>Able to merge. These branches can be automatically merged.<br>代表已經可以把新建立的分支放到主要分支上了<br>按下 Create pull request<br>按下 Merge pull request<br>按下 Confirm merge<br>這樣就成功了<br>可以查看 main 裡面的 commit</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/16/GitConflict/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/06/16/GitConflict/" class="post-title-link" itemprop="url">Git Conflict</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-06-16 17:00:00" itemprop="dateCreated datePublished" datetime="2024-06-16T17:00:00+08:00">2024-06-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-18 16:18:28" itemprop="dateModified" datetime="2024-06-18T16:18:28+08:00">2024-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Git-Conflict"><a href="#Git-Conflict" class="headerlink" title="Git Conflict"></a>Git Conflict</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> <span class="built_in">dir</span></span><br><span class="line"><span class="built_in">cd</span> ./dir</span><br><span class="line">code .</span><br><span class="line"><span class="built_in">touch</span> index.html</span><br></pre></td></tr></table></figure>
+
+<p>編輯 index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- dir --&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>推上 Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;message&#x27;</span></span><br><span class="line">git branch -M main</span><br><span class="line">git remote add origin https://github.com/pqiu85674/testgit.git</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+
+<p>建立另外一個資料夾並 clone 下來</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> dir2</span><br><span class="line"><span class="built_in">cd</span> ./dir2</span><br><span class="line">code .</span><br><span class="line">git <span class="built_in">clone</span> URL</span><br></pre></td></tr></table></figure>
+
+<p>更新原本 dir 的 index.html 內容</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- dir --&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>h1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>把 dir 的 index.html push 到 Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;message&#x27;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<p>更新後來建立 dir2 的 index.html 內容</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- dir2 --&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>把 dir2 的 index.html push 到 Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;message&#x27;</span></span><br><span class="line">git push//會出現錯誤</span><br></pre></td></tr></table></figure>
+
+<p>這裡出現 conflict 錯誤，因為前面 dir 已經更新 index.html 的內容並且 push 到 Github，導致 dir2 要 push 時衝突到，<strong>注意這裡是因為 dir2 更改的內容剛好與 dir 的內容不一致所導致</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull --rebase</span><br></pre></td></tr></table></figure>
+
+<p>這邊可以解決 conflict ， VS code 會出現兩者不一致的內容讓我們做選擇，編輯好後就可以 push 到 Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;message&#x27;</span></span><br><span class="line">git rebase --<span class="built_in">continue</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<p>恭喜成功！！！</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/06/Node_Express/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/06/06/Node_Express/" class="post-title-link" itemprop="url">Node_Express</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2024-06-06 13:23:53 / 修改時間：13:53:25" itemprop="dateCreated datePublished" datetime="2024-06-06T13:23:53+08:00">2024-06-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h1><p>Express 是一個簡潔且靈活的 node.js Web 應用框架, 提供了一系列强大特性幫助你創建各種 Web 應用，和豐富的 HTTP 工具。<br>使用 Express 可以快速搭建一個完整功能的网站。</p>
+<h2 id="建立-Express-專案"><a href="#建立-Express-專案" class="headerlink" title="建立 Express 專案"></a>建立 Express 專案</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br><span class="line">npm install express --save<span class="comment">//專案安裝express</span></span><br><span class="line">npm install express-generator -g<span class="comment">//全局安裝express-generator</span></span><br><span class="line">express --view=ejs<span class="comment">//建立專案內容</span></span><br><span class="line">npm install<span class="comment">//install package.json dependencies內容</span></span><br><span class="line">npm start<span class="comment">//啟動</span></span><br><span class="line"><span class="comment">//抓取package.json</span></span><br><span class="line"><span class="comment">//&quot;scripts&quot;: &#123;</span></span><br><span class="line"><span class="comment">//    &quot;start&quot;: &quot;node ./bin/www&quot;</span></span><br><span class="line"><span class="comment">//  &#125;,</span></span><br><span class="line"><span class="comment">//npm start = node ./bin/www</span></span><br></pre></td></tr></table></figure>
+
+<p>在瀏覽器上輸入<code>localhost:3000</code>就可以看到</p>
+<blockquote>
+<p><strong>Express</strong><br>Welcome to Express</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/05/NodeAPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/06/05/NodeAPI/" class="post-title-link" itemprop="url">NodeAPI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-06-05 15:26:15" itemprop="dateCreated datePublished" datetime="2024-06-05T15:26:15+08:00">2024-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-06 13:21:02" itemprop="dateModified" datetime="2024-06-06T13:21:02+08:00">2024-06-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">    <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;GET&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>, headers);</span><br><span class="line">    res.<span class="title function_">write</span>(</span><br><span class="line">      <span class="comment">//Response JSON格式</span></span><br><span class="line">      <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">        <span class="attr">todos</span>: todos,</span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">    res.<span class="title function_">end</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">404</span>, headers);</span><br><span class="line">    res.<span class="title function_">write</span>(</span><br><span class="line">      <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">        <span class="attr">message</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">    res.<span class="title function_">end</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">8000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>把 Response 單獨拉出來寫</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Handle.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">    <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">SuccessHandle</span>(<span class="params">res, todos, message</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, headers);</span><br><span class="line">  res.<span class="title function_">write</span>(</span><br><span class="line">    <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;true&quot;</span>,</span><br><span class="line">      <span class="attr">message</span>: message,</span><br><span class="line">      <span class="attr">todos</span>: todos,</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">ErrorHandle</span>(<span class="params">res, todos, message</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">404</span>, headers);</span><br><span class="line">  res.<span class="title function_">write</span>(</span><br><span class="line">    <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">      <span class="attr">message</span>: message,</span><br><span class="line">      <span class="attr">todos</span>: todos,</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="title class_">SuccessHandle</span>,</span><br><span class="line">  <span class="title class_">ErrorHandle</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//server.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">SuccessHandle</span>, <span class="title class_">ErrorHandle</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;./Handle&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;GET&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    <span class="title class_">SuccessHandle</span>(res, todos);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title class_">ErrorHandle</span>(res, <span class="string">&quot;false&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">8000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h1><p>會使用到 uuid</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br><span class="line">npm install uuid</span><br></pre></td></tr></table></figure>
+
+<p>參考連結： <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/uuid">uuid</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&quot;uuid&quot;</span>);</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;POST&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    req.<span class="title function_">on</span>(<span class="string">&quot;end&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> title = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(body).<span class="property">title</span>;</span><br><span class="line">        <span class="keyword">if</span> (title !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">          <span class="keyword">const</span> todo = &#123;</span><br><span class="line">            <span class="attr">title</span>: title,</span><br><span class="line">            <span class="attr">id</span>: <span class="title function_">uuidv4</span>(),</span><br><span class="line">          &#125;;</span><br><span class="line">          todos.<span class="title function_">push</span>(todo);</span><br><span class="line">          <span class="title class_">SuccessHandle</span>(res, todos, <span class="string">&quot;新增成功&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title class_">ErrorHandle</span>(res, <span class="string">&quot;title錯誤&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        <span class="title class_">ErrorHandle</span>(res, <span class="string">&quot;格式錯誤&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;DELETE&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    todos.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="title class_">SuccessHandle</span>(res, todos, <span class="string">&quot;刪除成功&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+
+<h1 id="DELETE-單比資料"><a href="#DELETE-單比資料" class="headerlink" title="DELETE 單比資料"></a>DELETE 單比資料</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;DELETE&quot;</span> &amp;&amp; req.<span class="property">url</span>.<span class="title function_">startsWith</span>(<span class="string">&quot;/?&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="keyword">new</span> <span class="title function_">URL</span>(req.<span class="property">url</span>, <span class="string">`http://<span class="subst">$&#123;req.headers.host&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> id = url.<span class="property">searchParams</span>.<span class="title function_">get</span>(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> title = url.<span class="property">searchParams</span>.<span class="title function_">get</span>(<span class="string">&quot;title&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> beforelength = todos.<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">    todos = todos.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> item.<span class="property">id</span> !== id;</span><br><span class="line">    &#125;);</span><br><span class="line">    todos = todos.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> item.<span class="property">title</span> !== title;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//或是以下寫法</span></span><br><span class="line">    <span class="comment">// todos = todos.filter((item) =&gt; item.id !== id);</span></span><br><span class="line">    <span class="comment">// todos = todos.filter((item) =&gt; item.title !== title);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> afterlength = todos.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">if</span> (beforelength &gt; afterlength) &#123;</span><br><span class="line">      <span class="title class_">SuccessHandle</span>(res, todos, <span class="string">&quot;成功刪除單比資料&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title class_">ErrorHandle</span>(res, todos, <span class="string">&quot;沒有刪除單比資料&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+
+<p>程式碼解釋</p>
+<p><code>new URL(req.url, ``http://$&#123;req.headers.host&#125;``);</code> 獲取完整 url<br><code>url.searchParams.get(&quot;id&quot;);</code> 取得 id<br><code>if (beforelength &gt; afterlength)</code> 確認有無刪除資料</p>
+<h2 id="實際用-Postman-操作"><a href="#實際用-Postman-操作" class="headerlink" title="實際用 Postman 操作"></a>實際用 Postman 操作</h2><ul>
+<li><p>POST</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;新增成功&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;todos&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;111&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3497ac36-4f52-4245-a50a-26ed7a8d792d&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;111&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;67f49303-aaaa-4975-9dcc-c8960928f84a&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DELETE</p>
+<p>輸入網址：<code>http://localhost:8000/?id=3497ac36-4f52-4245-a50a-26ed7a8d792d</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="string">&quot;成功刪除單比資料&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;todos&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;111&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;67f49303-aaaa-4975-9dcc-c8960928f84a&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">.</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> == <span class="string">&quot;OPTIONS&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">204</span>, headers);</span><br><span class="line">    res.<span class="title function_">end</span>();</span><br><span class="line">  &#125;</span><br><span class="line">.</span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+
+<h1 id="完整程式碼"><a href="#完整程式碼" class="headerlink" title="完整程式碼"></a>完整程式碼</h1><ul>
+<li>Handle.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">    <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">SuccessHandle</span>(<span class="params">res, todos, message</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, headers);</span><br><span class="line">  res.<span class="title function_">write</span>(</span><br><span class="line">    <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;true&quot;</span>,</span><br><span class="line">      <span class="attr">message</span>: message,</span><br><span class="line">      <span class="attr">todos</span>: todos,</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">ErrorHandle</span>(<span class="params">res, todos, message</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">404</span>, headers);</span><br><span class="line">  res.<span class="title function_">write</span>(</span><br><span class="line">    <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&quot;false&quot;</span>,</span><br><span class="line">      <span class="attr">message</span>: message,</span><br><span class="line">      <span class="attr">todos</span>: todos,</span><br><span class="line">    &#125;)</span><br><span class="line">  );</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="title class_">SuccessHandle</span>,</span><br><span class="line">  <span class="title class_">ErrorHandle</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>server.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">v4</span>: uuidv4 &#125; = <span class="built_in">require</span>(<span class="string">&quot;uuid&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">SuccessHandle</span>, <span class="title class_">ErrorHandle</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;./Handle&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">    <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> todos = [];</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> body = <span class="string">&quot;&quot;</span>;</span><br><span class="line">  req.<span class="title function_">on</span>(<span class="string">&quot;data&quot;</span>, <span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">    body += item;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;GET&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    <span class="title class_">SuccessHandle</span>(res, todos);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;POST&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    req.<span class="title function_">on</span>(<span class="string">&quot;end&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> title = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(body).<span class="property">title</span>;</span><br><span class="line">        <span class="keyword">if</span> (title !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">          <span class="keyword">const</span> todo = &#123;</span><br><span class="line">            <span class="attr">title</span>: title,</span><br><span class="line">            <span class="attr">id</span>: <span class="title function_">uuidv4</span>(),</span><br><span class="line">          &#125;;</span><br><span class="line">          todos.<span class="title function_">push</span>(todo);</span><br><span class="line">          <span class="title class_">SuccessHandle</span>(res, todos, <span class="string">&quot;新增成功&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title class_">ErrorHandle</span>(res, <span class="string">&quot;title錯誤&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        <span class="title class_">ErrorHandle</span>(res, <span class="string">&quot;格式錯誤&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;DELETE&quot;</span> &amp;&amp; req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    todos.<span class="property">length</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="title class_">SuccessHandle</span>(res, todos, <span class="string">&quot;刪除成功&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;DELETE&quot;</span> &amp;&amp; req.<span class="property">url</span>.<span class="title function_">startsWith</span>(<span class="string">&quot;/?&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="keyword">new</span> <span class="title function_">URL</span>(req.<span class="property">url</span>, <span class="string">`http://<span class="subst">$&#123;req.headers.host&#125;</span>`</span>);</span><br><span class="line">    <span class="keyword">const</span> id = url.<span class="property">searchParams</span>.<span class="title function_">get</span>(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> title = url.<span class="property">searchParams</span>.<span class="title function_">get</span>(<span class="string">&quot;title&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> beforelength = todos.<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line">    todos = todos.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> item.<span class="property">id</span> !== id;</span><br><span class="line">    &#125;);</span><br><span class="line">    todos = todos.<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> item.<span class="property">title</span> !== title;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//或是以下寫法</span></span><br><span class="line">    <span class="comment">// todos = todos.filter((item) =&gt; item.id !== id);</span></span><br><span class="line">    <span class="comment">// todos = todos.filter((item) =&gt; item.title !== title);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> afterlength = todos.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">if</span> (beforelength &gt; afterlength) &#123;</span><br><span class="line">      <span class="title class_">SuccessHandle</span>(res, todos, <span class="string">&quot;成功刪除單比資料&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title class_">ErrorHandle</span>(res, todos, <span class="string">&quot;沒有刪除單比資料&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">method</span> === <span class="string">&quot;OPTIONS&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">wirteHead</span>(<span class="number">204</span>, headers);</span><br><span class="line">    res.<span class="title function_">end</span>();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title class_">ErrorHandle</span>(res, <span class="string">&quot;false&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">8000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/04/NodeServer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -210,17 +604,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2024-06-04 17:08:14 / 修改時間：18:04:21" itemprop="dateCreated datePublished" datetime="2024-06-04T17:08:14+08:00">2024-06-04</time>
+              <time title="創建時間：2024-06-04 17:08:14" itemprop="dateCreated datePublished" datetime="2024-06-04T17:08:14+08:00">2024-06-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-05 15:27:34" itemprop="dateModified" datetime="2024-06-05T15:27:34+08:00">2024-06-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
+                  <a href="/Blog/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
                 </span>
             </span>
 
@@ -235,7 +635,141 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="以Node-js-實作一個-Server"><a href="#以Node-js-實作一個-Server" class="headerlink" title="以Node.js 實作一個 Server"></a>以Node.js 實作一個 Server</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node.js 內建 http 相關 module</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">      <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 兩個參數分別是 request 和 response，這裡使用命名慣例寫法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>,headers);</span><br><span class="line">    res.<span class="title function_">write</span>(<span class="string">&quot;This is index!&quot;</span>); <span class="comment">// 指定 respone 回傳內容</span></span><br><span class="line">    res.<span class="title function_">end</span>(); <span class="comment">// 結束這個 response</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">url</span> === <span class="string">&quot;/seach&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>,headers);</span><br><span class="line">    res.<span class="title function_">write</span>(<span class="string">&quot;This is seach Page!&quot;</span>); <span class="comment">// 指定 respone 回傳內容</span></span><br><span class="line">    res.<span class="title function_">end</span>(); <span class="comment">// 結束這個 response</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+          <h1 id="以-Node-js-實作一個-Server"><a href="#以-Node-js-實作一個-Server" class="headerlink" title="以 Node.js 實作一個 Server"></a>以 Node.js 實作一個 Server</h1><ol>
+<li><p>建立 server.js 檔</p>
+<blockquote>
+<p>mkdir ‘資料夾名稱’<br>cd .&#x2F;資料夾名稱<br>touch server.js<br>code .</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//server.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用 http 模組</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="comment">// 建立一個本地伺服器，設定接收到請求後的回傳資料</span></span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line">  res.<span class="title function_">write</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 使用 8000 port</span></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8000</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>啟動伺服器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>連線<br>伺服器正常運作後可以開啟瀏覽器，輸入網址<code>http://127.0.0.1:8000</code> or <code>localhost:8000</code> 就可以看到 <code>Hello</code></p>
+</li>
+<li><p>使用 nodemon 套件<br>每次修改儲存後都需要重起 node，可以透過 npm 安裝 <code>nodemon</code> 這個套件，就能在編輯檔案後自動重新載入伺服器。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm i -g nodemon<span class="comment">//全局安裝</span></span><br><span class="line"></span><br><span class="line">nodemon -v<span class="comment">//檢查安裝版本</span></span><br><span class="line"></span><br><span class="line">nodemon server.<span class="property">js</span><span class="comment">//啟動伺服器</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>port 已經被使用</p>
+<p>若是出現 <code>Error: listen EADDRINUSE: address already in use :::8000</code> 錯誤<br>代表 8000 port 正在使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lsof -i :<span class="number">8000</span><span class="comment">//查看是誰在使用</span></span><br><span class="line"><span class="comment">//node    277374</span></span><br><span class="line"></span><br><span class="line">kill -<span class="number">9</span> <span class="number">277374</span> <span class="comment">//把8000的port釋放出來</span></span><br><span class="line"></span><br><span class="line">nodemon server.<span class="property">js</span><span class="comment">//成功啟動伺服器</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>連線請求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">    <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, headers);</span><br><span class="line">  res.<span class="title function_">write</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">8000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼說明"><a href="#程式碼說明" class="headerlink" title="程式碼說明"></a>程式碼說明</h2><p><code>http</code>： 引入 Node.js 的 HTTP，用於創建伺服器<br><code>headers</code>： 定義 CORS，允許跨域請求</p>
+<blockquote>
+<p>“Access-Control-Allow-Headers”<br>作用：指定哪些 HTTP 的 Headers 設定可以在跨網域請求中發送到我的伺服器<br>内容：”Content-Type, Authorization, Content-Length, X-Requested-With”<br>這意味著客戶端可以在後續的實際請求中使用 Content-Type, Authorization, Content-Length, X-Requested-With</p>
+<p>“Access-Control-Allow-Origin”<br>作用：指定允許哪些網域來源可以造訪我的伺服器<br>内容：*<br>表示所有的網域都可造訪我的伺服器</p>
+<p>“Access-Control-Allow-Methods”<br>作用：指定允許客戶端使用的 HTTP 方法<br>内容：”PATCH, POST, GET,OPTIONS,DELETE”<br>表示允許使用 PATCH、POST、GET、OPTIONS 和 DELETE 方法。</p>
+<p>“Content-Type”<br>作用：指定回傳內容型別<br>内容：”application&#x2F;json”<br>客戶端回傳的數據型別為 JSON 格式</p>
+</blockquote>
+<p><code>requestListener</code> ： HTTP 的 Request 以及 Response，狀態碼設為 200，內容為 Hello<br><code>http.createServer(requestListener)</code> ： 創建伺服器<br><code>port</code> ： 從環境變量讀取 port，如果沒有設置則默認使用 8000 port<br><code>server.listen</code> ： 啟動伺服器並且監聽 port 啟動成功輸出 <code>Server is running on port 8000</code><br><code>shutdown</code> ： 定義一個函數，當接收到退出信號時關閉伺服器並退出<br><code>process.on(&quot;SIGTERM&quot;, shutdown)</code>和<code>process.on(&quot;SIGINT&quot;, shutdown)</code> ： 監聽終止信號，並調用 shutdown 關閉伺服器</p>
+<blockquote>
+<p>在<code>nodemon server.js</code>啟動伺服器想要關閉時按下<code>ctrl+c</code>就是觸發<code>process.on(&quot;SIGINT&quot;, shutdown)</code><br>而我也可以在終端機輸入<code>kill -9 00000</code>強置關閉你正在使用的 port 會觸發<code>process.on(&quot;SIGTERM&quot;, shutdown)</code><br>而使用這兩種<code>SIGTERM</code>和<code>SIGINT</code>可以優雅且關閉伺服器且沒有任何數據丟失或損壞非常重要</p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/06/04/NodePath/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/06/04/NodePath/" class="post-title-link" itemprop="url">Node.js基本知識</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-06-04 17:08:13" itemprop="dateCreated datePublished" datetime="2024-06-04T17:08:13+08:00">2024-06-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-05 18:03:46" itemprop="dateModified" datetime="2024-06-05T18:03:46+08:00">2024-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/Blog/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="基本知識"><a href="#基本知識" class="headerlink" title="基本知識"></a>基本知識</h1><h2 id="Global"><a href="#Global" class="headerlink" title="Global"></a>Global</h2><p>網頁環境中的全域物件是 <code>window</code>，而 Node.js 中是 <code>global</code></p>
+<ul>
+<li><p>瀏覽器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 瀏覽器中的全域變數</span></span><br><span class="line"><span class="keyword">var</span> foo = <span class="string">&quot;bar&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">window</span>.<span class="property">foo</span>); <span class="comment">// &#x27;bar&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Node.js 中的 <code>global</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Node.js 中的全域變數</span></span><br><span class="line"><span class="variable language_">global</span>.<span class="property">foo</span> = <span class="string">&quot;bar&quot;</span>;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">global</span>.<span class="property">foo</span>); <span class="comment">// &#x27;bar&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>兩個檔案（app.js 和 app2.js），裡面都分別撰寫了 <code>var a = 1</code>，<code>var b = 1</code>，這時網頁的 <code>window.a</code> 和 <code>window.b</code> 會得到 <code>1</code> 跟 <code>2</code> 的結果，Node.js 的 <code>global.b</code> 和 <code>global.b</code> 則是 undefined。</p>
+<p>Node.js 中的每個模組都會是獨立的，不會互相干擾也不會變成全域變數（除非直接操作 global 物件）</p>
+</li>
+</ul>
+<h2 id="require、module-exports"><a href="#require、module-exports" class="headerlink" title="require、module exports"></a>require、module exports</h2><p>在 index.js 上面載入已寫好的 Object</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// names.js</span></span><br><span class="line"><span class="keyword">const</span> name = <span class="string">&quot;Alan&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> name2 = <span class="string">&quot;Jason&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//要被載入的內容</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: name,</span><br><span class="line">  <span class="attr">name2</span>: name2,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">var</span> names = <span class="built_in">require</span>(<span class="string">&quot;./names&quot;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(names);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(names.<span class="property">name</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(names.<span class="property">name2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//&#123;name: &#x27;Alan&#x27;, name2: &#x27;Jason&#x27;&#125;</span></span><br><span class="line"><span class="comment">//Alan</span></span><br><span class="line"><span class="comment">//Jason</span></span><br></pre></td></tr></table></figure>
+
+<p>在 index.js 上面載入已寫好的 function</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function.js</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Hello</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Hello <span class="subst">$&#123;name&#125;</span>`</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="title class_">Hello</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">var</span> &#123; <span class="title class_">Hello</span> &#125; = <span class="built_in">require</span>(<span class="string">&quot;./function&quot;</span>);</span><br><span class="line"><span class="title class_">Hello</span>(<span class="string">&quot;Peter&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Hello Peter</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡用到解夠賦值 <code>var &#123; Hello &#125; = require(&quot;./function&quot;)</code> 直接提取 <code>require(&quot;./function&quot;)</code> 返回的對象中的 <code>Hello</code> 屬性並賦值給變量 <code>Hello</code></p>
+<h2 id="dirname、filename"><a href="#dirname、filename" class="headerlink" title="dirname、filename"></a><strong>dirname、</strong>filename</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//index.js</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(__dirname);</span><br><span class="line"><span class="comment">//顯示絕對路徑</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(__filename);</span><br><span class="line"><span class="comment">//顯示絕對路徑/index.js</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="path"><a href="#path" class="headerlink" title="path"></a>path</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">&quot;/user/Users/user/Desktop/test/index.js&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得目錄</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(path.<span class="title function_">dirname</span>(url)); <span class="comment">//  /user/Users/user/Desktop/test</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得檔名</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(path.<span class="title function_">basename</span>(url)); <span class="comment">//index.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 取得副檔名</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(path.<span class="title function_">extname</span>(url)); <span class="comment">//.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 拆解路徑（回傳物件格式）</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(path.<span class="title function_">parse</span>(url));</span><br><span class="line"><span class="comment">//&#123;root: &#x27;/&#x27;, dir: &#x27;/user/Users/user/Desktop/test&#x27;, base: &#x27;index.js&#x27;, ext: &#x27;.js&#x27;, name: &#x27;index&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 組合路徑</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(path.<span class="title function_">join</span>(path.<span class="title function_">dirname</span>(url), path.<span class="title function_">basename</span>(url)));</span><br><span class="line"><span class="comment">///user/Users/user/Desktop/test/index.js</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -277,17 +811,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2024-06-04 09:50:22 / 修改時間：16:41:32" itemprop="dateCreated datePublished" datetime="2024-06-04T09:50:22+08:00">2024-06-04</time>
+              <time title="創建時間：2024-06-04 09:50:22" itemprop="dateCreated datePublished" datetime="2024-06-04T09:50:22+08:00">2024-06-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-05 15:27:22" itemprop="dateModified" datetime="2024-06-05T15:27:22+08:00">2024-06-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
+                  <a href="/Blog/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
                 </span>
             </span>
 
@@ -700,20 +1240,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/Blog/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

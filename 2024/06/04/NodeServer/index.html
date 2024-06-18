@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"pqiu85674.github.io","root":"/Blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="以Node.js 實作一個 Server1234567891011121314151617181920212223242526272829303132333435363738394041424344454647&#x2F;&#x2F; node.js 內建 http 相關 moduleconst http &#x3D; require(&quot;http&quot;);const headers &#x3D; &#123;    &amp;q">
+  <meta name="description" content="以 Node.js 實作一個 Server 建立 server.js 檔  mkdir ‘資料夾名稱’cd .&#x2F;資料夾名稱touch server.jscode .  123456789101112&#x2F;&#x2F;server.js&#x2F;&#x2F; 引用 http 模組const http &#x3D; require(&quot;http&quot;);&#x2F;&#x2F; 建立一個本地伺服器，設定接收到請求後的回傳資料const s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeServer">
 <meta property="og:url" content="https://pqiu85674.github.io/Blog/2024/06/04/NodeServer/index.html">
 <meta property="og:site_name" content="pqiu85674">
-<meta property="og:description" content="以Node.js 實作一個 Server1234567891011121314151617181920212223242526272829303132333435363738394041424344454647&#x2F;&#x2F; node.js 內建 http 相關 moduleconst http &#x3D; require(&quot;http&quot;);const headers &#x3D; &#123;    &amp;q">
+<meta property="og:description" content="以 Node.js 實作一個 Server 建立 server.js 檔  mkdir ‘資料夾名稱’cd .&#x2F;資料夾名稱touch server.jscode .  123456789101112&#x2F;&#x2F;server.js&#x2F;&#x2F; 引用 http 模組const http &#x3D; require(&quot;http&quot;);&#x2F;&#x2F; 建立一個本地伺服器，設定接收到請求後的回傳資料const s">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2024-06-04T09:08:14.000Z">
-<meta property="article:modified_time" content="2024-06-04T10:04:21.479Z">
+<meta property="article:modified_time" content="2024-06-05T07:27:34.374Z">
 <meta property="article:author" content="Peter">
-<meta property="article:tag" content="node.js">
+<meta property="article:tag" content="Node.js">
 <meta property="article:tag" content="Express">
 <meta name="twitter:card" content="summary">
 
@@ -215,17 +215,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
-              
 
-              <time title="創建時間：2024-06-04 17:08:14 / 修改時間：18:04:21" itemprop="dateCreated datePublished" datetime="2024-06-04T17:08:14+08:00">2024-06-04</time>
+              <time title="創建時間：2024-06-04 17:08:14" itemprop="dateCreated datePublished" datetime="2024-06-04T17:08:14+08:00">2024-06-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-06-05 15:27:34" itemprop="dateModified" datetime="2024-06-05T15:27:34+08:00">2024-06-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分類於</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/node-js/" itemprop="url" rel="index"><span itemprop="name">node.js</span></a>
+                  <a href="/Blog/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
                 </span>
             </span>
 
@@ -240,7 +246,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="以Node-js-實作一個-Server"><a href="#以Node-js-實作一個-Server" class="headerlink" title="以Node.js 實作一個 Server"></a>以Node.js 實作一個 Server</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// node.js 內建 http 相關 module</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">      <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line"><span class="comment">// 兩個參數分別是 request 和 response，這裡使用命名慣例寫法</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">url</span> === <span class="string">&quot;/&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>,headers);</span><br><span class="line">    res.<span class="title function_">write</span>(<span class="string">&quot;This is index!&quot;</span>); <span class="comment">// 指定 respone 回傳內容</span></span><br><span class="line">    res.<span class="title function_">end</span>(); <span class="comment">// 結束這個 response</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (req.<span class="property">url</span> === <span class="string">&quot;/seach&quot;</span>) &#123;</span><br><span class="line">    res.<span class="title function_">writeHead</span>(<span class="number">200</span>,headers);</span><br><span class="line">    res.<span class="title function_">write</span>(<span class="string">&quot;This is seach Page!&quot;</span>); <span class="comment">// 指定 respone 回傳內容</span></span><br><span class="line">    res.<span class="title function_">end</span>(); <span class="comment">// 結束這個 response</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">3000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+        <h1 id="以-Node-js-實作一個-Server"><a href="#以-Node-js-實作一個-Server" class="headerlink" title="以 Node.js 實作一個 Server"></a>以 Node.js 實作一個 Server</h1><ol>
+<li><p>建立 server.js 檔</p>
+<blockquote>
+<p>mkdir ‘資料夾名稱’<br>cd .&#x2F;資料夾名稱<br>touch server.js<br>code .</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//server.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用 http 模組</span></span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="comment">// 建立一個本地伺服器，設定接收到請求後的回傳資料</span></span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;text/plain&quot;</span> &#125;);</span><br><span class="line">  res.<span class="title function_">write</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 使用 8000 port</span></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8000</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>啟動伺服器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.<span class="property">js</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>連線<br>伺服器正常運作後可以開啟瀏覽器，輸入網址<code>http://127.0.0.1:8000</code> or <code>localhost:8000</code> 就可以看到 <code>Hello</code></p>
+</li>
+<li><p>使用 nodemon 套件<br>每次修改儲存後都需要重起 node，可以透過 npm 安裝 <code>nodemon</code> 這個套件，就能在編輯檔案後自動重新載入伺服器。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm i -g nodemon<span class="comment">//全局安裝</span></span><br><span class="line"></span><br><span class="line">nodemon -v<span class="comment">//檢查安裝版本</span></span><br><span class="line"></span><br><span class="line">nodemon server.<span class="property">js</span><span class="comment">//啟動伺服器</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>port 已經被使用</p>
+<p>若是出現 <code>Error: listen EADDRINUSE: address already in use :::8000</code> 錯誤<br>代表 8000 port 正在使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lsof -i :<span class="number">8000</span><span class="comment">//查看是誰在使用</span></span><br><span class="line"><span class="comment">//node    277374</span></span><br><span class="line"></span><br><span class="line">kill -<span class="number">9</span> <span class="number">277374</span> <span class="comment">//把8000的port釋放出來</span></span><br><span class="line"></span><br><span class="line">nodemon server.<span class="property">js</span><span class="comment">//成功啟動伺服器</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>連線請求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Headers&quot;</span>:</span><br><span class="line">    <span class="string">&quot;Content-Type, Authorization, Content-Length, X-Requested-With&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Origin&quot;</span>: <span class="string">&quot;*&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Access-Control-Allow-Methods&quot;</span>: <span class="string">&quot;PATCH, POST, GET,OPTIONS,DELETE&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">requestListener</span>(<span class="params">req, res</span>) &#123;</span><br><span class="line">  res.<span class="title function_">writeHead</span>(<span class="number">200</span>, headers);</span><br><span class="line">  res.<span class="title function_">write</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">  res.<span class="title function_">end</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(requestListener);</span><br><span class="line"><span class="keyword">const</span> port = process.<span class="property">env</span>.<span class="property">PORT</span> || <span class="number">8000</span>;</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running on port <span class="subst">$&#123;port&#125;</span>`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 處理應用程序退出信號</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">shutdown</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  server.<span class="title function_">close</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Process terminated&quot;</span>);</span><br><span class="line">    process.<span class="title function_">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGTERM&quot;</span>, shutdown);</span><br><span class="line">process.<span class="title function_">on</span>(<span class="string">&quot;SIGINT&quot;</span>, shutdown);</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&quot;error&quot;</span>, <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (e.<span class="property">code</span> === <span class="string">&quot;EADDRINUSE&quot;</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Port <span class="subst">$&#123;port&#125;</span> is already in use`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">`Server error: <span class="subst">$&#123;e&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="程式碼說明"><a href="#程式碼說明" class="headerlink" title="程式碼說明"></a>程式碼說明</h2><p><code>http</code>： 引入 Node.js 的 HTTP，用於創建伺服器<br><code>headers</code>： 定義 CORS，允許跨域請求</p>
+<blockquote>
+<p>“Access-Control-Allow-Headers”<br>作用：指定哪些 HTTP 的 Headers 設定可以在跨網域請求中發送到我的伺服器<br>内容：”Content-Type, Authorization, Content-Length, X-Requested-With”<br>這意味著客戶端可以在後續的實際請求中使用 Content-Type, Authorization, Content-Length, X-Requested-With</p>
+<p>“Access-Control-Allow-Origin”<br>作用：指定允許哪些網域來源可以造訪我的伺服器<br>内容：*<br>表示所有的網域都可造訪我的伺服器</p>
+<p>“Access-Control-Allow-Methods”<br>作用：指定允許客戶端使用的 HTTP 方法<br>内容：”PATCH, POST, GET,OPTIONS,DELETE”<br>表示允許使用 PATCH、POST、GET、OPTIONS 和 DELETE 方法。</p>
+<p>“Content-Type”<br>作用：指定回傳內容型別<br>内容：”application&#x2F;json”<br>客戶端回傳的數據型別為 JSON 格式</p>
+</blockquote>
+<p><code>requestListener</code> ： HTTP 的 Request 以及 Response，狀態碼設為 200，內容為 Hello<br><code>http.createServer(requestListener)</code> ： 創建伺服器<br><code>port</code> ： 從環境變量讀取 port，如果沒有設置則默認使用 8000 port<br><code>server.listen</code> ： 啟動伺服器並且監聽 port 啟動成功輸出 <code>Server is running on port 8000</code><br><code>shutdown</code> ： 定義一個函數，當接收到退出信號時關閉伺服器並退出<br><code>process.on(&quot;SIGTERM&quot;, shutdown)</code>和<code>process.on(&quot;SIGINT&quot;, shutdown)</code> ： 監聽終止信號，並調用 shutdown 關閉伺服器</p>
+<blockquote>
+<p>在<code>nodemon server.js</code>啟動伺服器想要關閉時按下<code>ctrl+c</code>就是觸發<code>process.on(&quot;SIGINT&quot;, shutdown)</code><br>而我也可以在終端機輸入<code>kill -9 00000</code>強置關閉你正在使用的 port 會觸發<code>process.on(&quot;SIGTERM&quot;, shutdown)</code><br>而使用這兩種<code>SIGTERM</code>和<code>SIGINT</code>可以優雅且關閉伺服器且沒有任何數據丟失或損壞非常重要</p>
+</blockquote>
+</li>
+</ol>
+
     </div>
 
     
@@ -249,7 +290,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/Blog/tags/node-js/" rel="tag"><i class="fa fa-tag"></i> node.js</a>
+              <a href="/Blog/tags/Node-js/" rel="tag"><i class="fa fa-tag"></i> Node.js</a>
               <a href="/Blog/tags/Express/" rel="tag"><i class="fa fa-tag"></i> Express</a>
           </div>
 
@@ -259,10 +300,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Blog/2024/06/04/Node/" rel="prev" title="認識 Node.js、NPM">
-      <i class="fa fa-chevron-left"></i> 認識 Node.js、NPM
+    <a href="/Blog/2024/06/04/NodePath/" rel="prev" title="Node.js基本知識">
+      <i class="fa fa-chevron-left"></i> Node.js基本知識
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/Blog/2024/06/05/NodeAPI/" rel="next" title="NodeAPI">
+      NodeAPI <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -321,7 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5Node-js-%E5%AF%A6%E4%BD%9C%E4%B8%80%E5%80%8B-Server"><span class="nav-number">1.</span> <span class="nav-text">以Node.js 實作一個 Server</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5-Node-js-%E5%AF%A6%E4%BD%9C%E4%B8%80%E5%80%8B-Server"><span class="nav-number">1.</span> <span class="nav-text">以 Node.js 實作一個 Server</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BC%8F%E7%A2%BC%E8%AA%AA%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">程式碼說明</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -334,20 +378,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/Blog/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
