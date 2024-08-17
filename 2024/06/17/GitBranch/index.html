@@ -28,7 +28,7 @@
 <meta property="og:description" content="Git Branch假設 A 電腦跟 B 電腦都共用一個 Repositories在 A 及 B 電腦上先clone以下方便區分 A 及 B 電腦所以將 A 電腦路徑設為.&#x2F;gitA&#x2F; 12cd .&#x2F;gitA&#x2F;git clone Repositories url  B 電腦路徑設為.&#x2F;gitB&#x2F; 12cd .&#x2F;gitB&#x2F;git clone Repositories url  B 電腦 clone">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2024-06-17T09:36:04.000Z">
-<meta property="article:modified_time" content="2024-08-14T04:29:32.931Z">
+<meta property="article:modified_time" content="2024-08-16T10:43:19.519Z">
 <meta property="article:author" content="Peter">
 <meta property="article:tag" content="Git">
 <meta property="article:tag" content="Git Branch">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2024-08-14 12:29:32" itemprop="dateModified" datetime="2024-08-14T12:29:32+08:00">2024-08-14</time>
+                <time title="修改時間：2024-08-16 18:43:19" itemprop="dateModified" datetime="2024-08-16T18:43:19+08:00">2024-08-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,7 +273,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//這邊要注意做 switch branch 以前B電腦要先commit過否則資料會消失</span><br><span class="line">git switch main //切換到原本的branch</span><br><span class="line">git branch //查看目前有無在main branch上</span><br><span class="line">git pull //把main的commit內容pull到B電腦上</span><br><span class="line">//這裡有可能失敗</span><br><span class="line">//原因：A電腦已經在B電腦<span class="built_in">clone</span>下來之後進行push，並且B電腦有可能對原本的branch進行更改</span><br><span class="line">//所以直接pull有可能會導致B電腦上的 commit 與 Github 上的 commit 內容不一樣</span><br><span class="line">//所以要輸入</span><br><span class="line">git pull --rebase  //這裡會顯示Conflict，解決完後</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;Message&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>這裡成功完成讓 B 電腦上原本的 branch commit 變得跟 Github 上的 branch commit 一樣</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git branch //顯示 main</span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">//B電腦查看<span class="built_in">log</span> 可以看到 main commit 內容是 Github 上最新的 main commit(A電腦修改的部份)</span><br><span class="line">git switch new-branch-name //切回新的branch</span><br><span class="line">git rebase main </span><br><span class="line">//這裡會讓 new-branch-name 的 commit 變成 main commit 加上 new-branch-name commit 後面內容</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git branch //顯示 main</span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">//B電腦查看<span class="built_in">log</span> 可以看到 main commit 內容是 Github 上最新的 main commit(A電腦修改的部份)</span><br><span class="line">git switch new-branch-name //切回新的branch</span><br><span class="line">git rebase main</span><br><span class="line">//這裡會讓 new-branch-name 的 commit 變成 main commit 加上 new-branch-name commit 後面內容</span><br></pre></td></tr></table></figure>
 
 <p>會顯示檔案衝突要手動解決檔案的內容，這邊是使用 VS Code 直接開啟檔案就可以對檔案進行更改<br>修改完檔案後</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&#x27;Message&#x27;</span></span><br><span class="line">git status //查看一下狀態裡面會有指令可以參考</span><br><span class="line">git rebase --<span class="built_in">continue</span> //解決衝突後要下此指令</span><br><span class="line">git push //失敗</span><br><span class="line">git push -f //成功</span><br></pre></td></tr></table></figure>
@@ -284,9 +284,12 @@
 <p>再次回到 Github 並切換到 <code>new-branch-name</code> 點開 commit 可以看到已經成功更新了<br>看好之後切回 <code>new-branch-name</code> 可以看到上面綠色的<code>Compare &amp; pull request</code>點擊下去<br>點擊 <code>Create pull request</code><br>可以看到上面有<code>base</code>可以選擇<code>main</code>(原本的 branch) <code>compate</code> 選擇 <code>new-branch-name</code>(新的 branch)<br>看到以下訊息<br>Able to merge. These branches can be automatically merged.<br>代表已經可以把新建立的分支放到主要分支上了<br>按下 Create pull request<br>按下 Merge pull request<br>按下 Confirm merge<br>這樣就成功了<br>可以查看 main 裡面的 commit</p>
 <h1 id="統整"><a href="#統整" class="headerlink" title="統整"></a>統整</h1><p>A 電腦先 push 上 Github,B 電腦 clone 下來，A 電腦改變內容再次 push 上 Github<br>B 電腦創造新的 branch，在新的 branch 上開發，B 開發完成之後，B 電腦回到自己原本的 Branch(main)上<br>輸入指令：<code>git pull</code> 把最新的紀錄抓到 B 電腦的原本的 Branch 上<br>註：這裡有可能出現 Conflict，因為這裡 A 電腦已經更改內容並且 push 上 Github，而 B 電腦也有可能更改 Branch(main)並且 commit<br>假如出現 Conflict 要輸入指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git pull --rebase //解決Conflict</span><br><span class="line">git add .</span><br><span class="line">git commit -m &#x27;Message</span><br><span class="line">git checkout new-branch-name</span><br></pre></td></tr></table></figure>
-<p>回到B new-branch-name</p>
+
+<p>回到 B new-branch-name</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout new-branch-name</span><br><span class="line">git rebase main</span><br><span class="line">//這裡會讓 new-branch-name 的 commit 變成 main commit 加上 new-branch-name commit 後面內容</span><br><span class="line">git push origin new-branch-name -f</span><br></pre></td></tr></table></figure>
-<p>到Github產生pull repuest並且Merge</p>
+
+<p>到 Github 產生 pull repuest 並且 Merge</p>
+<p>參考連結：<br><a target="_blank" rel="noopener" href="https://github.com/doggy8088/Learn-Git-in-30-days/blob/master/zh-tw/README.md">https://github.com/doggy8088/Learn-Git-in-30-days/blob/master/zh-tw/README.md</a><br><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=P-nbNgIzlYE">https://www.youtube.com/watch?v=P-nbNgIzlYE</a></p>
 
     </div>
 
@@ -309,7 +312,10 @@
     <a href="/Blog/2024/06/16/GitConflict/" rel="prev" title="Git Conflict">
       <i class="fa fa-chevron-left"></i> Git Conflict
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/Blog/2024/08/16/JavaScript_Constructor_Function/" rel="next" title="JavaScript Constructor Function">
+      JavaScript Constructor Function <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -381,20 +387,20 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/Blog/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/Blog/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
