@@ -187,6 +187,195 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/08/17/JavaScript_Callback-Function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/08/17/JavaScript_Callback-Function/" class="post-title-link" itemprop="url">JavaScript Callback Function</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2024-08-17 18:09:35 / 修改時間：18:56:16" itemprop="dateCreated datePublished" datetime="2024-08-17T18:09:35+08:00">2024-08-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Callback-Function"><a href="#Callback-Function" class="headerlink" title="Callback Function"></a>Callback Function</h1><p>Callback Function 是用來處理非同步的方法，把 function 當參數傳進 function</p>
+<p>先看一般程式碼</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">A</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is A function.&quot;</span>), <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">B</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is B function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">C</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is C function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">A</span>();</span><br><span class="line"><span class="title function_">B</span>();</span><br><span class="line"><span class="title function_">C</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//輸出結果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//This is B function.</span></span><br><span class="line"><span class="comment">//This is C function.</span></span><br><span class="line"><span class="comment">//This is A function.</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡使用 setTimeout，雖然設定 0 秒的延遲，但此 function 不會立即執行<br>直到主線執行完後才會執行此 function<br>執行順序會是 <code>B function</code> &#x3D;&#x3D;&gt; <code>C function</code> &#x3D;&#x3D;&gt; <code>A function</code><br>這裡遇到非同步，該如何解決？</p>
+<h1 id="使用-Callback"><a href="#使用-Callback" class="headerlink" title="使用 Callback"></a>使用 Callback</h1><p><strong>重點</strong></p>
+<ul>
+<li>把 function 當參數傳進 function</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">A</span>(<span class="params">firstFn, secondFn</span>) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is A function.&quot;</span>);</span><br><span class="line">    <span class="title function_">firstFn</span>(secondFn);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">B</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is B function.&quot;</span>);</span><br><span class="line">  <span class="title function_">fn</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">C</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is C function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">A</span>(B, C);</span><br><span class="line"></span><br><span class="line"><span class="comment">//輸出結果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//This is A function.</span></span><br><span class="line"><span class="comment">//This is B function.</span></span><br><span class="line"><span class="comment">//This is C function.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>講解</strong></p>
+<ul>
+<li>先看程式碼第 15 行，呼叫 A function 並且帶入 B 及 C 兩個 function<br>這兩個參數不用加()，因為只要帶入 function 就好，若加了()會變成立馬執行 function 是不對的</li>
+<li>執行 A function 當程式碼執行到第 3 行，先印出<code>This is A function.</code><br>往下執行第 4 行，這裡的 firstFn 和 secondFn 分別對應 B function 和 C function<br>呼叫 B function 並且參數帶入 C function</li>
+<li>此時程式碼跳到第 7 行，順著往下執行第 8 行印出<code>This is B function.</code><br>到第 9 行 ，也就是執行 C function</li>
+<li>此時程式碼跳到第 11 行，再往下執行印出<code>This is C function.</code></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/08/17/JavaScript_Promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Blog/2024/08/17/JavaScript_Promise/" class="post-title-link" itemprop="url">JavaScript Promise</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2024-08-17 17:49:25" itemprop="dateCreated datePublished" datetime="2024-08-17T17:49:25+08:00">2024-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2024-08-18 13:14:06" itemprop="dateModified" datetime="2024-08-18T13:14:06+08:00">2024-08-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>Promise 是用來專門處理非同步的物件，雖然也可以使用 callback function<br>但 callback function 有一個缺點，那就是當今天需要執行多個非同步操作時，程式碼會一直往內層嵌套<br>程式碼會變得非常複雜且難以維護，這種情況稱之為 callback 地獄</p>
+<p>先來看看下面的 function</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;test&quot;</span>;</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">test</span>()); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡使用 <code>setTimeout</code> 讓此 function 過一秒 return “test”<br>接著印出內容，但是卻印出 undefined<br>因為 console.log()會直接往下執行，並不會等待 function 是否處理完成<br>所以要使用下面介紹的 Promise</p>
+<h1 id="Promise-function"><a href="#Promise-function" class="headerlink" title="Promise function"></a>Promise function</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">promise</span>(<span class="params">text, time</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (text) &#123;</span><br><span class="line">        <span class="title function_">resolve</span>(text);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="title function_">reject</span>(<span class="string">&quot;請勿傳入空字串&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;, time);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">promise</span>(<span class="string">&quot;text&quot;</span>, <span class="number">1000</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(response))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(err))</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;finally&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行完 過1秒後才印出以下結果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// text</span></span><br><span class="line"><span class="comment">// finally</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>講解</strong></p>
+<ul>
+<li><p>第 2 行有兩個參數 分別是 resolve 和 reject<br>這兩個 function 分別對應成功及失敗的回傳結果，只能回傳其中之一，回傳後此 Promise 結束</p>
+</li>
+<li><p>第 13 行呼叫此 Promise，第 14 行使用 then 接 resolve (成功) 內容<br>第 15 行使用 catch 接 reject(失敗) 內容<br>第 16 行 finally 是不管成功與否都會執行裡面的內容</p>
+</li>
+</ul>
+<h2 id="Promise-all"><a href="#Promise-all" class="headerlink" title="Promise.all"></a>Promise.all</h2><p>當我想要呼叫許多方法並且同一時間回傳要使用 Promise.all</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text&quot;</span>, <span class="number">1000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text2&quot;</span>, <span class="number">2000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text3&quot;</span>, <span class="number">3000</span>)</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(response))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(error))</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;finally&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行完 過3秒才會印出結果</span></span><br><span class="line"><span class="comment">// [ &#x27;text&#x27;, &#x27;text2&#x27;, &#x27;text3&#x27; ]</span></span><br><span class="line"><span class="comment">// finally</span></span><br></pre></td></tr></table></figure>
+
+<p>如果遇到 reject 會如何？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>([</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;&quot;</span>, <span class="number">1000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text2&quot;</span>, <span class="number">2000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text3&quot;</span>, <span class="number">3000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text3&quot;</span>, <span class="number">4000</span>)</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(response))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(error))</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;finally&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行完 過1秒才會印出結果</span></span><br><span class="line"><span class="comment">// 請勿傳入空字串</span></span><br><span class="line"><span class="comment">// finally</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡只要一遇到 reject 就直接 catch，此範例因第一個 function 會進入 reject，所以過一秒就會印出結果</p>
+<h2 id="Promise-race"><a href="#Promise-race" class="headerlink" title="Promise.race"></a>Promise.race</h2><p>當我想要取得許多 Promise 當中最快完成的資料可以使用 Promise.race</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>([</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text&quot;</span>, <span class="number">1000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text2&quot;</span>, <span class="number">2000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text3&quot;</span>, <span class="number">3000</span>),</span><br><span class="line">  <span class="title function_">promise</span>(<span class="string">&quot;text4&quot;</span>, <span class="number">500</span>)</span><br><span class="line">])</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(response))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(error))</span><br><span class="line">  .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;finally&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 執行完 過0.5秒才會印出結果</span></span><br><span class="line"><span class="comment">// text4</span></span><br><span class="line"><span class="comment">// finally</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡最快 resolve 就會直接回傳其內容</p>
+<h2 id="PromiseState"><a href="#PromiseState" class="headerlink" title="PromiseState"></a>PromiseState</h2><p>以下程式碼放到瀏覽器 使用開發人員工具執行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">promise</span>(<span class="params">text</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (text) &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(text);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">reject</span>(<span class="string">&quot;請勿傳入空字串&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">promise</span>(<span class="string">&quot;text&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>可以看到裡面的內容，其中 PromiseState 顯示 fulfilled 而 PromiseResult 顯示 text<br>若執行<code>console.log(promise(&quot;&quot;));</code><br>可以看到裡面的內容，其中 PromiseState 顯示 rejected 而 PromiseResult 顯示 請勿傳入空字串<br>這是 promise function 有 resolve 以及 reject 的情況會顯示相對應的內容<br>來看 promise 沒有 resolve 和 reject 會怎樣？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">promise</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">promise</span>());</span><br></pre></td></tr></table></figure>
+
+<p>可以看到裡面的內容，其中 pending 顯示 fulfilled 而 PromiseResult 顯示 undefined</p>
+<p><strong>PromiseState 重點</strong></p>
+<ul>
+<li>Rending : promise 無 resolve 和 reject，沒有回傳結果</li>
+<li>fulfilled : promise 進到 resolve</li>
+<li>rejected : promise 進到 reject</li>
+</ul>
+<h1 id="Axios"><a href="#Axios" class="headerlink" title="Axios"></a>Axios</h1><p>Axios 是基於 Promise 的 HTTP 客戶端，用於瀏覽器和 Node.js 環境中進行 HTTP 請求<br>Axios 非常強大且程式碼簡潔</p>
+<h2 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h2><p>可使用 npm</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
+
+<p>若是 Html 也可以使用 CDN</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://unpkg.com/axios@1.6.7/dist/axios.min.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>也可到<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/axios">axios 官網</a>查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//這裡是使用 npm</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">&quot;axios&quot;</span>);</span><br><span class="line">axios</span><br><span class="line">  .<span class="title function_">get</span>(<span class="string">&quot;https://jsonplaceholder.typicode.com/users&quot;</span>)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(response.<span class="property">data</span>))</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(error));</span><br></pre></td></tr></table></figure>
+
+<p>這裡 axios 用到 promise 的概念，對網址發出 get 請求，並且處理對方拋出的訊息<br>若對方拋出 resolve 會進入到 then，若對方拋出 reject 會進入到 catch</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/08/16/JavaScript_Constructor_Function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1085,244 +1274,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/05/08/Hexo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/Blog/images/avatar.gif">
-      <meta itemprop="name" content="Peter">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pqiu85674">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Blog/2024/05/08/Hexo/" class="post-title-link" itemprop="url">Hexo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2024-05-08 14:01:50" itemprop="dateCreated datePublished" datetime="2024-05-08T14:01:50+08:00">2024-05-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2024-06-04 16:48:03" itemprop="dateModified" datetime="2024-06-04T16:48:03+08:00">2024-06-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/Blog/categories/Hexo%E4%B8%80%E9%8D%B5%E4%BD%88%E7%BD%B2%E5%88%B0Github/" itemprop="url" rel="index"><span itemprop="name">Hexo一鍵佈署到Github</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="安裝需求"><a href="#安裝需求" class="headerlink" title="安裝需求"></a>安裝需求</h1><p>在開始安裝 Hexo 之前，必須先在電腦安裝下列工具：</p>
-<ul>
-<li><p>Node.js</p>
-</li>
-<li><p>Git</p>
-</li>
-</ul>
-<p>確認安裝版本</p>
-<ul>
-<li><p>node.js</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>npm</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="Hexo-環境建置"><a href="#Hexo-環境建置" class="headerlink" title="Hexo 環境建置"></a>Hexo 環境建置</h1><ul>
-<li><p>安裝 Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>確認安裝成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化 Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;資料夾名稱&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="目錄結構"><a href="#目錄結構" class="headerlink" title="目錄結構"></a>目錄結構</h1><ul>
-<li>node_modules</li>
-<li>scaffolds</li>
-<li>source<ul>
-<li>_posts</li>
-</ul>
-</li>
-<li>themes</li>
-<li>_config.yml</li>
-<li>.gitignore</li>
-<li>package.json</li>
-<li>package-lock.json</li>
-</ul>
-<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><p><strong>加入 landscape 主題</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/hexojs/hexo-theme-landscape themes/landscape</span><br></pre></td></tr></table></figure>
-
-<p>可參考<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-theme-landscape">https://github.com/hexojs/hexo-theme-landscape</a></p>
-<p><strong>加入 next 主題</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-
-<p>可參考<a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
-<p>其他主題可參考<a target="_blank" rel="noopener" href="https://hexo.io/themes/">https://hexo.io/themes/</a></p>
-<h2 id="config-yml-內容介紹"><a href="#config-yml-內容介紹" class="headerlink" title="_config.yml 內容介紹"></a>_config.yml 內容介紹</h2><ul>
-<li>title: Hexo # 部落格名稱</li>
-<li>subtitle: ‘’ # 部落格小標題</li>
-<li>description: ‘’ # 部落格描述</li>
-<li>keywords: # 部落格關鍵字</li>
-<li>author: John Doe # 部落格作者</li>
-<li>language: en # 部落格語系(可以調成 zh-TW)</li>
-<li>timezone: ‘’ # 標準時間</li>
-</ul>
-<h1 id="Hexo-指令"><a href="#Hexo-指令" class="headerlink" title="Hexo 指令"></a>Hexo 指令</h1><p>常用的 Hexo 指令</p>
-<ul>
-<li><p>新增文章</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&#x27;文章名稱&#x27;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>產生靜態檔案</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>開啟模擬伺服器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>清除暫存檔案</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>產生靜態檔案並且部署到 GitHub 上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="一鍵佈署到-Github-上"><a href="#一鍵佈署到-Github-上" class="headerlink" title="一鍵佈署到 Github 上"></a>一鍵佈署到 Github 上</h2><p><strong>在 Github 上建立一個專案並且記錄網址</strong></p>
-<ul>
-<li><p>安裝 hexo-deployer-git.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更改 _config.yml 的現有資料，並新增以下組態:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">url:<span class="string">&#x27;https://username.github.io/project&#x27;</span>(網址要改)</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: https://github.com/&lt;username&gt;/&lt;project&gt;(網址要改)</span><br><span class="line">  <span class="comment"># example, https://github.com/hexojs/hexojs.github.io</span></span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>執行以下指令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>參考連結:<a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/docs/github-pages">https://hexo.io/zh-tw/docs/github-pages</a></p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/1970/01/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/Blog/images/avatar.gif">
-      <meta itemprop="name" content="Peter">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="pqiu85674">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Blog/1970/01/01/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：1970-01-01 08:00:00" itemprop="dateCreated datePublished" datetime="1970-01-01T08:00:00+08:00">1970-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2024-05-08 11:08:15" itemprop="dateModified" datetime="2024-05-08T11:08:15+08:00">2024-05-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/Blog/page/2/">2</a><a class="extend next" rel="next" href="/Blog/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+  </nav>
 
 
 
@@ -1386,7 +1342,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/Blog/archives">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>

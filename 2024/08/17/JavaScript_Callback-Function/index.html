@@ -20,18 +20,20 @@
     var CONFIG = {"hostname":"pqiu85674.github.io","root":"/Blog/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://pqiu85674.github.io/Blog/tags/index.html">
+  <meta name="description" content="Callback FunctionCallback Function 是用來處理非同步的方法，把 function 當參數傳進 function 先看一般程式碼 12345678910111213141516171819function A() &#123;  setTimeout(() &#x3D;&gt; console.log(&quot;This is A function.&quot;), 0);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Callback Function">
+<meta property="og:url" content="https://pqiu85674.github.io/Blog/2024/08/17/JavaScript_Callback-Function/index.html">
 <meta property="og:site_name" content="pqiu85674">
+<meta property="og:description" content="Callback FunctionCallback Function 是用來處理非同步的方法，把 function 當參數傳進 function 先看一般程式碼 12345678910111213141516171819function A() &#123;  setTimeout(() &#x3D;&gt; console.log(&quot;This is A function.&quot;), 0);">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2024-05-08T14:31:29.000Z">
-<meta property="article:modified_time" content="2024-05-08T15:04:21.044Z">
+<meta property="article:published_time" content="2024-08-17T10:09:35.000Z">
+<meta property="article:modified_time" content="2024-08-17T10:56:16.095Z">
 <meta property="article:author" content="Peter">
 <meta property="article:tag" content="pqiu85674">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://pqiu85674.github.io/Blog/tags/">
+<link rel="canonical" href="https://pqiu85674.github.io/Blog/2024/08/17/JavaScript_Callback-Function/">
 
 
 <script id="page-configurations">
@@ -39,13 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-TW'
   };
 </script>
 
-  <title>tags | pqiu85674
-</title>
+  <title>JavaScript Callback Function | pqiu85674</title>
   
 
 
@@ -183,51 +184,97 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-TW">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://pqiu85674.github.io/Blog/2024/08/17/JavaScript_Callback-Function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/Blog/images/avatar.gif">
+      <meta itemprop="name" content="Peter">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pqiu85674">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript Callback Function
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">tags
-</h1>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
 
-<div class="post-meta">
+              <time title="創建時間：2024-08-17 18:09:35 / 修改時間：18:56:16" itemprop="dateCreated datePublished" datetime="2024-08-17T18:09:35+08:00">2024-08-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Callback-Function"><a href="#Callback-Function" class="headerlink" title="Callback Function"></a>Callback Function</h1><p>Callback Function 是用來處理非同步的方法，把 function 當參數傳進 function</p>
+<p>先看一般程式碼</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">A</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is A function.&quot;</span>), <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">B</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is B function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">C</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is C function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">A</span>();</span><br><span class="line"><span class="title function_">B</span>();</span><br><span class="line"><span class="title function_">C</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//輸出結果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//This is B function.</span></span><br><span class="line"><span class="comment">//This is C function.</span></span><br><span class="line"><span class="comment">//This is A function.</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡使用 setTimeout，雖然設定 0 秒的延遲，但此 function 不會立即執行<br>直到主線執行完後才會執行此 function<br>執行順序會是 <code>B function</code> &#x3D;&#x3D;&gt; <code>C function</code> &#x3D;&#x3D;&gt; <code>A function</code><br>這裡遇到非同步，該如何解決？</p>
+<h1 id="使用-Callback"><a href="#使用-Callback" class="headerlink" title="使用 Callback"></a>使用 Callback</h1><p><strong>重點</strong></p>
+<ul>
+<li>把 function 當參數傳進 function</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">A</span>(<span class="params">firstFn, secondFn</span>) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is A function.&quot;</span>);</span><br><span class="line">    <span class="title function_">firstFn</span>(secondFn);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">B</span>(<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is B function.&quot;</span>);</span><br><span class="line">  <span class="title function_">fn</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">C</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;This is C function.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">A</span>(B, C);</span><br><span class="line"></span><br><span class="line"><span class="comment">//輸出結果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//This is A function.</span></span><br><span class="line"><span class="comment">//This is B function.</span></span><br><span class="line"><span class="comment">//This is C function.</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>講解</strong></p>
+<ul>
+<li>先看程式碼第 15 行，呼叫 A function 並且帶入 B 及 C 兩個 function<br>這兩個參數不用加()，因為只要帶入 function 就好，若加了()會變成立馬執行 function 是不對的</li>
+<li>執行 A function 當程式碼執行到第 3 行，先印出<code>This is A function.</code><br>往下執行第 4 行，這裡的 firstFn 和 secondFn 分別對應 B function 和 C function<br>呼叫 B function 並且參數帶入 C function</li>
+<li>此時程式碼跳到第 7 行，順著往下執行第 8 行印出<code>This is B function.</code><br>到第 9 行 ，也就是執行 C function</li>
+<li>此時程式碼跳到第 11 行，再往下執行印出<code>This is C function.</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Blog/2024/08/17/JavaScript_Promise/" rel="prev" title="JavaScript Promise">
+      <i class="fa fa-chevron-left"></i> JavaScript Promise
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              目前共有 11 個標籤
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/Blog/tags/Express/" style="font-size: 21px; color: #6f6f6f">Express</a> <a href="/Blog/tags/Git/" style="font-size: 21px; color: #6f6f6f">Git</a> <a href="/Blog/tags/Git-Branch/" style="font-size: 12px; color: #ccc">Git Branch</a> <a href="/Blog/tags/Git-Conflict/" style="font-size: 12px; color: #ccc">Git Conflict</a> <a href="/Blog/tags/Github/" style="font-size: 12px; color: #ccc">Github</a> <a href="/Blog/tags/Global/" style="font-size: 12px; color: #ccc">Global</a> <a href="/Blog/tags/Hexo/" style="font-size: 12px; color: #ccc">Hexo</a> <a href="/Blog/tags/JavaScript/" style="font-size: 12px; color: #ccc">JavaScript</a> <a href="/Blog/tags/JavaScript-Constructor-Function/" style="font-size: 12px; color: #ccc">JavaScript Constructor Function</a> <a href="/Blog/tags/Node-js/" style="font-size: 30px; color: #111">Node.js</a> <a href="/Blog/tags/NodeAPI/" style="font-size: 12px; color: #ccc">NodeAPI</a>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
@@ -278,6 +325,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Callback-Function"><span class="nav-number">1.</span> <span class="nav-text">Callback Function</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Callback"><span class="nav-number">2.</span> <span class="nav-text">使用 Callback</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
